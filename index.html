@@ -3,45 +3,316 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Valentin</title>
+  <title>Leszel a valentinom?</title>
   <style>
-    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
-    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:#fff6fb}
-    .card{width:360px;background:#fff;border-radius:12px;padding:1.6rem;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.06)}
-    h1{font-size:1.2rem;margin:.2rem 0 0.6rem}
-    .buttons{display:flex;gap:.6rem;justify-content:center;margin-top:.6rem}
-    button{padding:.6rem 1rem;border:0;border-radius:8px;cursor:pointer;font-weight:600}
-    .yes{background:#ff5b7a;color:#fff}
-    .no{background:#6c757d;color:#fff}
-    #answer{margin-top:1rem;font-weight:700;min-height:1.2em}
-    @media (max-width:420px){.card{width:92%}}
+    :root{
+      --bg1:#ffeef8;
+      --bg2:#fff7fb;
+      --card:#ffffff;
+      --accent:#ff6b81;
+      --muted:#6b6b6b;
+      --glass: rgba(255,255,255,0.6);
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, #fff0f6 0%, transparent 20%),
+                  radial-gradient(1000px 500px at 90% 90%, #fff7f9 0%, transparent 20%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:2rem;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card{
+      width:min(720px, 96%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.9));
+      backdrop-filter: blur(6px);
+      border-radius:18px;
+      padding:2rem;
+      box-shadow: 0 10px 30px rgba(12,12,20,0.18);
+      border:1px solid rgba(255,255,255,0.6);
+      text-align:center;
+      position:relative;
+      z-index:5;
+    }
+
+    h1{
+      margin:0 0 .5rem;
+      font-size:1.6rem;
+      letter-spacing:0.2px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:.6rem;
+    }
+
+    .title-icons{
+      font-size:1.6rem;
+      filter: drop-shadow(0 2px 6px rgba(255,107,129,0.35));
+    }
+
+    p.lead{
+      margin:0 0 1rem;
+      color:var(--muted);
+      font-size:0.98rem;
+    }
+
+    .buttons{
+      display:flex;
+      gap:0.75rem;
+      justify-content:center;
+      margin-top:.75rem;
+      flex-wrap:wrap;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+      padding:.6rem 1.05rem;
+      border-radius:12px;
+      font-weight:600;
+      font-size:1rem;
+      transition:transform .12s ease, box-shadow .12s ease;
+      box-shadow: 0 6px 14px rgba(12,12,20,0.06);
+      user-select:none;
+    }
+
+    button:active{ transform:translateY(1px); }
+
+    .yes{
+      background:linear-gradient(180deg,var(--accent),#ff4b6a);
+      color:#fff;
+      box-shadow: 0 8px 30px rgba(255,107,129,0.18);
+    }
+
+    .no{
+      background: linear-gradient(180deg,#9aa1a9,#6c757d);
+      color:#fff;
+    }
+
+    #answer{
+      margin-top:1rem;
+      min-height:1.4em;
+      font-weight:700;
+      font-size:1.15rem;
+      color:#222;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+    }
+
+    /* Floating emoji layer */
+    .floaters{
+      pointer-events:none;
+      position:absolute;
+      inset:0;
+      z-index:2;
+      overflow:hidden;
+    }
+    .floater{
+      position:absolute;
+      font-size:1.6rem;
+      will-change: transform, opacity;
+      animation-name: float-fall, sway;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      opacity:.95;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    @keyframes float-fall{
+      0%{ transform: translateY(-10%) translateX(0) scale(0.9); opacity:0 }
+      10%{ opacity:1 }
+      100%{ transform: translateY(120vh) translateX(20px) scale(1.05); opacity:0.9 }
+    }
+    @keyframes sway{
+      0%{ transform: translateX(0) }
+      50%{ transform: translateX(12px) }
+      100%{ transform: translateX(0) }
+    }
+
+    /* small celebratory burst */
+    .burst{
+      position:absolute;
+      pointer-events:none;
+      z-index:9;
+      inset:auto;
+    }
+    .burst span{
+      position:absolute;
+      font-size:1.2rem;
+      transform-origin:center;
+      opacity:0;
+      animation: burst-pop .8s ease forwards;
+    }
+    @keyframes burst-pop{
+      0%{ transform: translateY(0) scale(.2); opacity:1 }
+      40%{ transform: translateY(-24px) scale(1.1); opacity:1 }
+      100%{ transform: translateY(-60px) scale(.8); opacity:0 }
+    }
+
+    /* shake for "no" */
+    .shake{
+      animation: shakeit .5s ease;
+    }
+    @keyframes shakeit{
+      0%{ transform:translateX(0) }
+      20%{ transform:translateX(-8px) }
+      40%{ transform:translateX(8px) }
+      60%{ transform:translateX(-6px) }
+      80%{ transform:translateX(6px) }
+      100%{ transform:translateX(0) }
+    }
+
+    footer{
+      margin-top:1.25rem;
+      font-size:.82rem;
+      color:var(--muted);
+    }
+
+    /* Accessibility: respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .floater, .burst span, .shake{ animation:none !important; transition:none !important; transform:none !important; }
+    }
+
+    /* responsive */
+    @media (max-width:420px){
+      h1{ font-size:1.25rem; gap:.4rem }
+      .floater{ font-size:1.2rem }
+      .card{ padding:1.2rem; border-radius:14px }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <main class="card" role="main" aria-labelledby="q">
-      <h1 id="q">Leszel a valentinom, kisnyuszko?</h1>
+  <div class="wrap" role="application" aria-label="Valentin nap interaktív oldal">
+    <div class="floaters" id="floaters" aria-hidden="true"></div>
+
+    <main class="card" role="main" aria-labelledby="question">
+      <h1 id="question"><span class="title-icons">🐰❤️</span> Leszel a valentinom, kisnyuszko? <span class="title-icons">🐱💕</span></h1>
+      <p class="lead">Válassz bátran 😉</p>
+
       <div class="buttons" role="group" aria-label="Válaszok">
-        <button class="yes" id="yes">Igen</button>
-        <button class="no" id="no">Nem</button>
+        <button class="yes" id="yesBtn" type="button" aria-pressed="false">Igen</button>
+        <button class="no" id="noBtn" type="button" aria-pressed="false">Nem</button>
       </div>
-      <div id="answer" aria-live="polite"></div>
+
+      <div id="answer" aria-live="polite" aria-atomic="true"></div>
+
+      <div class="burst" id="burst" aria-hidden="true"></div>
+
+      <footer>
+        <small>mondd, hogy igen, mert nagyon szeretlek❤️</small>
+      </footer>
     </main>
   </div>
 
   <script>
-    const yes = document.getElementById('yes');
-    const no  = document.getElementById('no');
-    const ans = document.getElementById('answer');
+    // Basic behavior + floating emojis
+    const floaters = document.getElementById('floaters');
+    const burst = document.getElementById('burst');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn  = document.getElementById('noBtn');
+    const answerEl = document.getElementById('answer');
 
-    yes.addEventListener('click', () => {
-      ans.textContent = 'nagyon szeretlek ❤️';
+    // Create continuous gentle floaters in background
+    const TOTAL = 22;
+    const choices = ['❤️','💖','💓','💕','🐱','🐾','🐰'];
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+
+    for(let i=0;i<TOTAL;i++){
+      const el = document.createElement('div');
+      el.className='floater';
+      el.textContent = choices[Math.floor(Math.random()*choices.length)];
+      // randomize start position and animation
+      el.style.left = (Math.random()*100) + '%';
+      el.style.top  = (-10 - Math.random()*20) + '%';
+      el.style.fontSize = (rand(14,34)) + 'px';
+      const dur = rand(6,16);
+      el.style.animationDuration = dur + 's, ' + (rand(3,6)) + 's';
+      el.style.animationDelay = (Math.random()*-10) + 's';
+      el.style.opacity = (rand(0.6,1)).toFixed(2);
+      floaters.appendChild(el);
+    }
+
+    // helper: create burst (hearts & cats) at button position
+    function createBurst(x,y,items=12){
+      burst.innerHTML='';
+      for(let i=0;i<items;i++){
+        const s = document.createElement('span');
+        s.textContent = choices[Math.floor(Math.random()*choices.length)];
+        // random position & rotation
+        s.style.left = x + 'px';
+        s.style.top  = y + 'px';
+        s.style.color = (Math.random()>0.5)?'#ff5b7a':'#ffd1e0';
+        s.style.transform = 'translate(-50%,0) rotate(' + (rand(-40,40)) + 'deg)';
+        s.style.fontSize = (rand(14,28)) + 'px';
+        s.style.animationDelay = (rand(0,0.15)) + 's';
+        burst.appendChild(s);
+      }
+      // remove after animation
+      setTimeout(()=> burst.innerHTML='', 900);
+    }
+
+    // "Igen" behavior: now with heart at the end
+    yesBtn.addEventListener('click', (e)=>{
+      answerEl.textContent = 'nagyon szeretlek ❤️';
+      yesBtn.setAttribute('aria-pressed','true');
+      noBtn.setAttribute('aria-pressed','false');
+
+      // burst at button location
+      const rect = yesBtn.getBoundingClientRect();
+      const x = rect.left + rect.width/2;
+      const y = rect.top + rect.height/2;
+      createBurst(x, y, 18);
+
+      // add some temporary floating confetti from top
+      for(let i=0;i<8;i++){
+        const t = document.createElement('div');
+        t.className='floater';
+        t.textContent = (Math.random()>0.6)?'🐱':'❤️';
+        t.style.left = (x + rand(-80,80)) + 'px';
+        t.style.top  = (y + rand(-20,20)) + 'px';
+        t.style.fontSize = (rand(18,36)) + 'px';
+        t.style.animationDuration = (rand(0.8,1.6)) + 's, ' + (rand(2,4)) + 's';
+        floaters.appendChild(t);
+        setTimeout(()=> t.remove(), 1600);
+      }
     });
 
-    no.addEventListener('click', () => {
-      ans.textContent = 'rossz válasz';
+    // "Nem" behavior
+    noBtn.addEventListener('click', (e)=>{
+      answerEl.textContent = 'rossz válasz';
+      noBtn.setAttribute('aria-pressed','true');
+      yesBtn.setAttribute('aria-pressed','false');
+
+      // shake the card a bit
+      const card = document.querySelector('.card');
+      card.classList.remove('shake');
+      // trigger reflow to restart animation
+      void card.offsetWidth;
+      card.classList.add('shake');
+      setTimeout(()=> card.classList.remove('shake'), 600);
     });
+
+    // Respect prefers-reduced-motion
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if(mq.matches){
+      // remove floaters and animation heavy things
+      floaters.innerHTML='';
+    }
   </script>
 </body>
 </html>
-
