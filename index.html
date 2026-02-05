@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentin nap</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#fff0f6; margin:0; display:flex; align-items:center; justify-content:center; height:100vh; }
+    .card { background:#fff; padding:2rem; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); text-align:center; width:320px; }
+    h1 { font-size:1.25rem; margin:0 0 1rem; }
+    .buttons { margin-top:0.5rem; }
+    button { margin:0 .4rem; padding:.6rem 1rem; border-radius:8px; border:0; cursor:pointer; font-size:1rem; }
+    button.yes { background:#ff6b81; color:#fff; }
+    button.no  { background:#6c757d;  color:#fff; }
+    #answer { margin-top:1rem; font-weight:700; font-size:1.1rem; min-height:1.4em; }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="question">
+    <h1 id="question">Leszel a valentinom kisnyuszko?</h1>
+    <div class="buttons" role="group" aria-label="Válaszok">
+      <button class="yes" id="yesBtn" type="button">Igen</button>
+      <button class="no" id="noBtn" type="button">Nem</button>
+    </div>
+    <div id="answer" aria-live="polite"></div>
+  </main>
+
+  <script>
+    const answerEl = document.getElementById('answer');
+    document.getElementById('yesBtn').addEventListener('click', () => {
+      answerEl.textContent = 'nagyon szeretlek';
+    });
+    document.getElementById('noBtn').addEventListener('click', () => {
+      answerEl.textContent = 'rossz válasz';
+    });
+  </script>
+</body>
+</html>
